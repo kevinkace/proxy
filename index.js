@@ -1,10 +1,10 @@
 const express = require("express");
 const app = express();
-
 const extReq = require("./ext-req");
 
+app.use(express.json());
 
-app.get("/*",
+app.all("/*",
     // make outbound request
     (req, res, next) => {
         console.log(`proxying request to ${req.url}`);
