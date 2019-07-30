@@ -1,5 +1,5 @@
 const request = require('request');
-const config = require("./config.js");
+const config  = require("./config.js");
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
@@ -11,7 +11,7 @@ module.exports = function(req) {
         qs      : req.query
     };
 
-    if(
+    if (
         req.method === "PATCH" ||
         req.method === "POST"  ||
         req.method === "PUT"
