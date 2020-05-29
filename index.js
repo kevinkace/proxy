@@ -24,15 +24,15 @@ app.all("/*",
     },
 
     // parse body?
-    (req, res, next) => {
-        try {
-            res.parsed = JSON.parse(res.body);
-        } catch (err) {
-            console.log("error parsing" + err);
-        }
+    // (req, res, next) => {
+    //     try {
+    //         res.parsed = JSON.parse(res.body);
+    //     } catch (err) {
+    //         console.log("error parsing" + err);
+    //     }
 
-        next();
-    },
+    //     next();
+    // },
 
     // respond
     (req, res) => res.parsed ? res.json(res.parsed) : res.send(res.body)
