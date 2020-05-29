@@ -2,7 +2,7 @@
 
 small local proxy when HTTPS is buggin' ya
 
+- add the baseurl you want to proxy to `./config.js`, copy from `./config.example.js`
 - `npm start`
-- listens on port 3000
-- add the baseurl you want to proxy to `./config.js`, copy from `./config.example.js`, eg
+- starts a server listening on port `3000`
 - make request to `http://localhost:3000/blah`, get response from url in config
