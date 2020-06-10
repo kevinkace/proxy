@@ -2,6 +2,8 @@ const express = require("express");
 const app     = express();
 const extReq  = require("./ext-req");
 
+const config = require("./config");
+
 app.use(express.json());
 
 // catches all requests on port
@@ -14,14 +16,24 @@ app.all("/*",
             .then(res2 => {
                 res.body = res2.body;
 
-                next();
+                console.log(`proxied req from ${config.baseUrl}`);
+
+                res
+                    .set(res2.headers)
+                    // .status(res2.statusCode)
+                    .send(res2.body);
             })
             .catch(err => {
-                res.body = "{}";
 
-                next();
+                console.log("error");
+
+                console.log({err});
+
+                res
+                    // .status(err.statusCode)
+                    .send(res2.body);
             });
-    },
+    }
 
     // parse body?
     // (req, res, next) => {
@@ -35,7 +47,7 @@ app.all("/*",
     // },
 
     // respond
-    (req, res) => res.parsed ? res.json(res.parsed) : res.send(res.body)
+    // (req, res) => res.parsed ? res.json(res.parsed) : res.send(res.body)
 );
 
 app.listen(3000, () => console.log("running server"));
