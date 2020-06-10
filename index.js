@@ -31,7 +31,7 @@ app.all("/*",
 
                 res
                     // .status(err.statusCode)
-                    .send(res2.body);
+                    .json({err});
             });
     }
 
