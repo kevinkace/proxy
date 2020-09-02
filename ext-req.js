@@ -3,6 +3,27 @@ const config  = require("./config.js");
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
+function serialize(data) {
+    let parts = [],
+        field;
+
+    for (field in data) {
+        if(Array.isArray(data[field])) {
+            data[field].forEach((d, idx) => {
+                const key = `${field}[${idx}]`;
+
+                parts.push(`${encodeURIComponent(key)}=${encodeURIComponent(d)}`);
+            });
+
+            continue;
+        }
+
+        parts.push(`${field}=${encodeURIComponent(data[field])}`);
+    }
+
+    return parts.join("&");
+}
+
 module.exports = function(req) {
     const options = {
         baseUrl : config.baseUrl,
@@ -16,11 +37,12 @@ module.exports = function(req) {
         req.method === "POST"  ||
         req.method === "PUT"
     ) {
-        options.body = req.body;
+        options.headers = req.headers;
+        options.body = serialize(req.body);
         options.json = true;
     }
 
-    console.log(`[${options.method.toUpperCase()}] Requesting ${options.url}`);
+    console.log(`[${options.method.toUpperCase()}] ${config.baseUrl}${options.url}, body: ${options.body}`);
 
     return new Promise((resolve, rej) => {
         request(options, (err, res, body) => err ? rej(err) : resolve(res));

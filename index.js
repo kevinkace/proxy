@@ -5,6 +5,8 @@ const extReq  = require("./ext-req");
 const config = require("./config");
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 
 // catches all requests on port
 app.all("/*",
